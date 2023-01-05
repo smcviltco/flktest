@@ -1,0 +1,27 @@
+<odoo>
+  <data>
+
+    <record id="res_partner_form_inh" model="ir.ui.view">
+        <field name="name">res.partner.form.inh</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="vat" position="after">
+                <field name="company_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_category_form_inh" model="ir.ui.view">
+        <field name="name">product.category.form.inh</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+            <field name="parent_id" position="after">
+                <field name="company_id"/>
+            </field>
+        </field>
+    </record>
+
+  </data>
+</odoo>

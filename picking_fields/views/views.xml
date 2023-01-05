@@ -1,0 +1,21 @@
+<odoo>
+  <data>
+
+    <record id="stock_picking_form_inh" model="ir.ui.view">
+      <field name="name">stock.picking.form.inh</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="stock.view_picking_form"/>
+      <field name="arch" type="xml">
+
+        <xpath expr="//field[@name='backorder_id']" position="after">
+          <field name="grv_no"/>
+          <field name="invoice_no"/>
+          <field name="delivery_note"/>
+        </xpath>
+
+      </field>
+
+    </record>
+
+  </data>
+</odoo>

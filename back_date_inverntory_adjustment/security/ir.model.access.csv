@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_back_date_inverntory_adjustment_back_date_inverntory_adjustment,back_date_inverntory_adjustment.back_date_inverntory_adjustment,model_back_date_inverntory_adjustment_back_date_inverntory_adjustment,base.group_user,1,1,1,1

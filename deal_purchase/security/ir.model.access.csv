@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_deal_purchase,access.deal.purchase,model_deal_purchase,,1,1,1,1
+access_deal_lines,access.deal.lines,model_deal_lines,,1,1,1,1
+access_transfer_lines,access.transfer.lines,model_transfer_lines,,1,1,1,1
+access_production_lines,access.production.lines,model_production_lines,,1,1,1,1

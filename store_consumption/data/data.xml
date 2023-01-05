@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_store_consumption" model="ir.sequence">
+            <field name="name">Store Consumption</field>
+            <field name="code">store.consumption</field>
+            <field name="prefix">SC</field>
+<!--            <field name="number_next">1</field>-->
+            <field name="padding">3</field>
+<!--            <field name="number_increment">1</field>-->
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+A_1,GeneralExpensesModule,general_expenses.model_generalexp_class,general_expenses.security_group_for_expense,1,1,1,1
+A_2,GeneralExpensesModule,general_expenses.model_generalexp_tree,general_expenses.security_group_for_expense,1,1,1,1
+A_3,GeneralExpensesModule,general_expenses.model_expense_type,general_expenses.security_group_for_expense,1,1,1,1

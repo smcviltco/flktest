@@ -1,0 +1,18 @@
+<odoo>
+	<record id="view_create_payment_wizard_form" model="ir.ui.view">
+		<field name="name">Invoice wizards</field>
+		<field name="model">create.payment.wizard</field>
+		<field name="arch" type="xml">
+			<form string="Payroll Payment">
+				<group>
+					<field name="company_id"/>
+					<field name="payment_ids" invisible="1" widget="many2many_tags"/>
+				</group>
+				<footer>
+					<button name="create_data" string="Create" type="object" class="btn-primary"/>
+					<button  string="Close" type="object" class="btn-secondary" special="cancel"/>
+				</footer>
+			</form>
+		</field>
+	</record>
+</odoo>

@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_po_consume_bags_po_consume_bags,po_consume_bags.po_consume_bags,model_po_consume_bags_po_consume_bags,base.group_user,1,1,1,1

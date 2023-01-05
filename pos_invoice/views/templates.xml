@@ -1,0 +1,218 @@
+<odoo>
+    <data>
+        <template id="pos_orders_id_print">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+
+                        <t t-if="o.partner_id">
+                            <div style="float:right;">
+                                <span t-field="o.partner_id.name"/>
+                                <br/>
+                                <span t-field="o.partner_id.street"/>
+                                <br/>
+<!--                                <span t-field="o.partner_id.city"/>-->
+                                <span t-field="o.partner_id.state_id"/>
+                                <span t-field="o.partner_id.zip"/>,
+                                <span t-field="o.partner_id.country_id"/><br/>
+                                Tax ID:<span t-field="o.partner_id.vat"/>
+                                <br/>
+                            </div>
+                        </t>
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <table>
+                                <t t-if="o.name">
+                                    <tr>
+                                        <td>
+                                            <h3>Order:</h3>
+                                        </td>
+                                        <td width="10%"/>
+                                        <td>
+                                            <h3 t-field="o.name"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-if="o.session_id">
+                                    <tr>
+                                        <td>
+                                            <h3>Session:</h3>
+                                        </td>
+                                        <td width="10%"/>
+                                        <td>
+                                            <h3 t-field="o.session_id.name"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                            <br/>
+                            <table class="table table-sm no-spacing table-borderless">
+                                <tr>
+                                    <t t-if="o.date_order">
+                                        <td>
+                                            <strong>Date:</strong>
+                                            <span t-field="o.date_order"/>
+                                        </td>
+                                    </t>
+                                    <td width="32%"/>
+                                    <t t-if="o.user_id">
+                                        <td>
+                                            <strong>User:</strong>
+                                            <span t-field="o.user_id.name"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </table>
+                            <!--                             for make lines dynamically-->
+                            <t t-set="current_lots" t-value="0"/>
+                            <t t-set="current_qty" t-value="0"/>
+                            <t t-set="current_unit_price" t-value="0"/>
+                            <t t-set="current_disc" t-value="0"/>
+                            <t t-set="current_tax" t-value="0"/>
+                            <t t-set="current_wtsubtotal" t-value="0"/>
+                            <t t-set="current_tsubtotal" t-value="0"/>
+                            <t t-foreach="o.lines" t-as="l">
+                                <t t-if="pack_lot_ids">
+                                    <t t-set="current_lots" t-value="1"/>
+                                </t>
+                                <t t-if="l.qty">
+                                    <t t-set="current_qty" t-value="1"/>
+                                </t>
+                                <t t-if="l.price_unit">
+                                    <t t-set="current_unit_price" t-value="1"/>
+                                </t>
+                                <t t-if="l.discount">
+                                    <t t-set="current_disc" t-value="1"/>
+                                </t>
+                                <t t-if="l.tax_ids_after_fiscal_position">
+                                    <t t-set="current_tax" t-value="1"/>
+                                </t>
+                                <t t-if="l.price_subtotal">
+                                    <t t-set="current_wtsubtotal" t-value="1"/>
+                                </t>
+                                <t t-if="l.price_subtotal_incl">
+                                    <t t-set="current_tsubtotal" t-value="1"/>
+                                </t>
+
+                            </t>
+                            <table width="100%">
+                                <tr>
+                                    <th>Product</th>
+                                    <t t-if="current_lots">
+                                        <th>Lot/serial Number</th>
+                                    </t>
+                                    <t t-if="current_qty">
+                                        <th>Qty</th>
+                                    </t>
+                                    <t t-if="current_unit_price">
+                                        <th>Unit Price</th>
+                                    </t>
+                                    <t t-if="current_disc">
+                                        <th>Discount%</th>
+                                    </t>
+                                    <t t-if="current_tax">
+                                        <th>Tax</th>
+                                    </t>
+                                    <t t-if="current_wtsubtotal">
+                                        <th>Subtotal w/o Tax</th>
+                                    </t>
+                                    <t t-if="current_tsubtotal">
+                                        <th class="text-right">Subtotal</th>
+                                    </t>
+                                </tr>
+                                <t t-foreach="o.lines" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <span t-field="line.full_product_name"/>
+                                        </td>
+                                        <t t-if="current_lots">
+                                            <td>
+                                                <span t-field="line.pack_lot_ids"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="current_qty">
+                                            <td>
+                                                <span t-field="line.qty"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="current_unit_price">
+                                            <td>
+                                                <span t-field="line.price_unit"
+                                                      t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                            </td>
+                                        </t>
+                                        <t t-if="current_disc">
+                                            <td>
+                                                <span t-field="line.discount"/>
+                                                %
+                                            </td>
+                                        </t>
+                                        <t t-if="current_tax">
+                                            <td>
+                                                <span t-field="line.tax_ids_after_fiscal_position"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="current_wtsubtotal">
+                                            <td>
+                                                <span t-field="line.price_subtotal"
+                                                      t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                            </td>
+                                        </t>
+                                        <t t-if="current_tsubtotal">
+                                            <td class="text-right">
+                                                <span t-field="line.price_subtotal_incl"
+                                                      t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </t>
+                            </table>
+
+                            <div class="clearfix" name="so_total_summary">
+                                <div id="total" class="row" name="total">
+                                    <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
+                                        <table class="table table-sm">
+                                            <t t-if="o.amount_tax">
+                                                <tr class="border-black o_total_tax">
+                                                    <td name="td_amount_tax_label">
+                                                        <strong>Taxes</strong>
+                                                    </td>
+                                                    <td name="td_amount_tax" class="text-right">
+                                                        <span t-field="o.amount_tax"
+                                                              t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                            <t t-if="o.amount_total">
+                                                <tr class="border-black o_total">
+                                                    <td name="td_amount_total_label">
+                                                        <strong>Total</strong>
+                                                    </td>
+                                                    <td name="td_amount_total" class="text-right">
+                                                        <span t-field="o.amount_total"
+                                                              t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                            <t t-if="o.amount_paid">
+                                                <tr class="border-black o_total_paid">
+                                                    <td name="td_amount_total_paid_label">
+                                                        <strong>Total Paid</strong>
+                                                    </td>
+                                                    <td name="td_amount_total_paid" class="text-right">
+                                                        <span t-field="o.amount_paid"
+                                                              t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

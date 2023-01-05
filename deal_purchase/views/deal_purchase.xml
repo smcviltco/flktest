@@ -1,0 +1,122 @@
+<odoo>
+    <data>
+        <record id="view_deal_purchase_tree" model="ir.ui.view">
+            <field name="name">deal.purchase.tree</field>
+            <field name="model">deal.purchase</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="ref"/>
+                    <field name="vendor_id"/>
+                    <field name="date"/>
+                    <field name="vendor_reference"/>
+                    <field name="quantity" readonly="1"/>
+                    <field name="received_quantity" readonly="1"/>
+                    <field name="balance"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_deal_purchase_form" model="ir.ui.view">
+            <field name="name">deal.purchase.form</field>
+            <field name="model">deal.purchase</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+<!--                        <button id="button_recieved_quantity" name="action_recieved_quantity" string="Recieved Quantity"-->
+<!--                                class="btn-primary" type="object"/>-->
+                        <button id="button_confirm" name="action_confirm" string="Confirm"
+                                class="btn-primary" type="object"
+                                attrs="{'invisible':[('state','in',('confirm' , 'cancel', 'closed'))]}"/>
+                        <button id="button_close" name="action_close" string="Close"
+                                class="btn-primary" type="object"
+                                attrs="{'invisible':[('state','not in',('confirm'))]}"/>
+                        <button id="button_reset_draft" name="action_reset_draft" string="Reset to Draft"
+                                class="btn-primary" type="object" states="confirm,cancel"/>
+                        <button id="button_cancel" name="action_cancel" string="Cancel"
+                                class="btn-primary" type="object" states="draft"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="ref" readonly="1" force_save="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="vendor_id"/>
+                                <field name="vendor_reference"/>
+                            </group>
+                            <group>
+                                <field name="date"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Product Lines">
+                                <field name="deal_lines_id">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="description"/>
+                                        <field name="qty"/>
+                                        <field name="received_qty"/>
+                                        <field name="unit_price"/>
+                                        <field name="sub_total" force_save="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Transfer Lines">
+                                <field name="transfer_lines">
+                                    <tree editable="bottom">
+                                        <field name="partner_id"/>
+                                        <field name="product_id"/>
+                                        <field name="location_dest_id" string="Location"/>
+                                        <field name="ref"/>
+                                        <field name="origin"/>
+                                        <field name="qty" sum="Total"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Production Lines">
+                                <field name="production_lines">
+                                    <tree editable="bottom">
+<!--                                        <field name="partner_id"/>-->
+                                        <field name="product_id"/>
+<!--                                        <field name="location_dest_id" string="Location"/>-->
+                                        <field name="ref"/>
+<!--                                        <field name="origin"/>-->
+                                        <field name="qty" sum="Total"/>
+                                        <field name="uom_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="deal_purchase_action" model="ir.actions.act_window">
+            <field name="name">Deals</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">deal.purchase</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    create your Deals!
+                </p>
+            </field>
+        </record>
+
+
+        <menuitem id="deal_menu_root"
+                  name="Deals"
+                  parent="purchase.menu_procurement_management"
+                  action="deal_purchase_action"/>
+    </data>
+</odoo>

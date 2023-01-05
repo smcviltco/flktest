@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_res_partner_inherited" model="ir.ui.view">
+        <field name="name">res.partner.inherited</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="model">res.partner</field>
+        <field name="priority">100</field>
+        <field type="xml" name="arch">
+            <xpath expr="/form/sheet" position="before">
+                <header>
+                    <button id="button_approve" name="action_approve" string="Approve"
+                            class="btn-primary" type="object" confirm="Are you sure that you need to approve?" groups="contact_archive.group_contact_approve"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+     <record id="action_approval_view" model="ir.actions.act_window">
+        <field name="name">Waiting For Approval</field>
+        <field name="res_model">res.partner</field>
+<!--        <field name="view_type">form</field>-->
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('active', '=', False)]</field>
+<!--        <field name="search_view_id" ref="view_project_filter" />-->
+        <field name="context">{}</field>
+     </record>
+
+
+     <menuitem id="waiting_approval_root"
+              name="Waiting For Approval"
+              parent="contacts.menu_contacts"
+              action="action_approval_view"
+               groups="contact_archive.group_contact_approve"
+              sequence="20"/>
+
+
+
+</odoo>

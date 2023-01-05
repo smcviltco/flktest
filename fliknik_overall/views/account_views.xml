@@ -1,0 +1,42 @@
+<odoo>
+
+    <record id="view_account_account_form_inherit" model="ir.ui.view">
+        <field name="name">account.account.form.inherit</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="model">account.account</field>
+        <field type="xml" name="arch">
+            <xpath expr="//field[@name='deprecated']" position="after">
+                <field name="account_from"/>
+                <field name="account_to"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pos_config_form_inherit" model="ir.ui.view">
+        <field name="name">pos.config.form.inherit</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="model">pos.config</field>
+        <field type="xml" name="arch">
+<!--            <xpath expr="//field[@name='company_id']" position="after">-->
+<!--                <field name="is_non_ofc_pos"/>-->
+<!--            </xpath>-->
+
+            <div class="row mt16 o_settings_container">
+                <div class="col-12 col-lg-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="is_non_ofc_pos"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="is_non_ofc_pos"/>
+<!--                        <button string="Save" type="object" name="execute" class="oe_highlight"-->
+<!--                                id="is_non_ofc_pos"/>-->
+                    </div>
+                </div>
+            </div>
+
+
+        </field>
+    </record>
+
+
+</odoo>

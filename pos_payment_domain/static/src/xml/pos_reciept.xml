@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+
+        <xpath expr="//div[hasclass('pos-receipt-contact')]" position="after">
+           <t t-if='receipt.client'>
+               <div style="font-weight:bold;text-align:center;font-size:12px;"><h4>Customer:<t t-esc='receipt.client.name'/></h4>
+                   <t t-esc='receipt.client.street'/><br/>Tax ID:<t t-esc='receipt.client.vat'/>
+               </div>
+<!--           <div style="font-weight:bold;text-align:center;font-size:12px;"><t t-esc='receipt.client.street'/><t t-esc='receipt.client.vat'/></div>-->
+           </t>
+        </xpath>
+
+        <xpath expr="//div[hasclass('orderlines')]" position="replace">
+            <div class="orderlines">
+            <table width="100%">
+                <thead>
+                <th></th>
+                    <th>Qty</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <t t-foreach="receipt.orderlines" t-as="line" t-key="line.id">
+                    <tr>
+                        <td> <t t-esc="line.product_name_wrapped[0]"/></td>
+                        <td> <span  t-esc="line.quantity" /></td>
+                        <td> <span t-esc="env.pos.format_currency_no_symbol(line.price_display)" class="price_display pos-receipt-right-align"/></td>
+                    </tr>
+                    </t>
+                </tbody>
+            </table>
+
+                <!--              <div>-->
+                <!--                             <span style="margin-left:155px;font-weight:bold;">&#160;&#160;&#160;&#160;&#160;&#160;QTY</span>-->
+                <!--                        </div>-->
+                <!--                <t t-foreach="receipt.orderlines" t-as="line" t-key="line.id">-->
+                <!--                    <t t-if="isSimple(line)">-->
+                <!--                        <div>-->
+                <!--                            <t t-esc="line.product_name_wrapped[0]"/>-->
+                <!--                            <span style="margin-left:40px;">&#160;&#160;&#160;&#160;&#160;&#160;</span><span  t-esc="line.quantity" />-->
+                <!--                            <span t-esc="env.pos.format_currency_no_symbol(line.price_display)" class="price_display pos-receipt-right-align"/>-->
+                <!--                        </div>-->
+                <!--                        <WrappedProductNameLines line="line" />-->
+                <!--                    </t>-->
+                <!--                    <t t-else="">-->
+                <!--                        <div t-esc="line.product_name_wrapped[0]" />-->
+                <!--                        <WrappedProductNameLines line="line" />-->
+                <!--                        <t t-if="line.display_discount_policy == 'without_discount' and line.price != line.price_lst">-->
+                <!--                            <div class="pos-receipt-left-padding">-->
+                <!--                                <t t-esc="env.pos.format_currency_no_symbol(line.price_lst)" />-->
+                <!--                                ->-->
+                <!--                                <t t-esc="env.pos.format_currency_no_symbol(line.price)" />-->
+                <!--                            </div>-->
+                <!--                        </t>-->
+                <!--                        <t t-elif="line.discount !== 0">-->
+                <!--                            <div class="pos-receipt-left-padding">-->
+                <!--                                <t t-if="env.pos.config.iface_tax_included === 'total'">-->
+                <!--                                    <t t-esc="env.pos.format_currency_no_symbol(line.price_with_tax_before_discount)"/>-->
+                <!--                                </t>-->
+                <!--                                <t t-else="">-->
+                <!--                                    <t t-esc="env.pos.format_currency_no_symbol(line.price)"/>-->
+                <!--                                </t>-->
+                <!--                            </div>-->
+                <!--                        </t>-->
+                <!--                        <t t-if="line.discount !== 0">-->
+                <!--                            <div class="pos-receipt-left-padding">-->
+                <!--                                Discount: <t t-esc="line.discount" />%-->
+                <!--                            </div>-->
+                <!--                        </t>-->
+                <!--                        <span style="margin-left:40px;">&#160;&#160;&#160;&#160;&#160;&#160;</span><span  t-esc="line.quantity" />-->
+                <!--                        <div class="pos-receipt-left-padding">-->
+                <!--&lt;!&ndash;                            <t t-esc="Math.round(line.quantity * Math.pow(10, env.pos.dp['Product Unit of Measure'])) / Math.pow(10, env.pos.dp['Product Unit of Measure'])"/>&ndash;&gt;-->
+                <!--                            &lt;!&ndash;                            <t t-if="line.unit_name !== 'Units'" t-esc="line.unit_name" />&ndash;&gt;-->
+                <!--                            &lt;!&ndash;                            x&ndash;&gt;-->
+                <!--                            <t t-esc="env.pos.format_currency_no_symbol(line.price_display_one)" />-->
+                <!--                            <span class="price_display pos-receipt-right-align">-->
+                <!--                                <t t-esc="env.pos.format_currency_no_symbol(line.price_display)" />-->
+                <!--                            </span>-->
+                <!--                        </div>-->
+                <!--                    </t>-->
+                <!--                </t>-->
+            </div>
+        </xpath>
+    </t>
+</templates>

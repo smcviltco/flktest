@@ -1,0 +1,15 @@
+<odoo>
+  <data>
+   <record id="view_purchase_type_inherited" model="ir.ui.view">
+        <field name="name">purchase.order.inherited</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="model">purchase.order</field>
+        <field name="priority">100</field>
+        <field type="xml" name="arch">
+            <xpath expr="//field[@name='currency_id']" position="after">
+                <field name="purchase_type"/>
+            </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>

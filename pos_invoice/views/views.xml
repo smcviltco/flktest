@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <report
+                id="pos_invoice_pdf"
+                string="Print Order"
+                model="pos.order"
+                report_type="qweb-pdf"
+                name="pos_invoice.pos_orders_id_print"
+                file="pos_invoice.pos_orders_id_print"
+        />
+
+    </data>
+</odoo>

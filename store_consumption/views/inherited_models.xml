@@ -1,0 +1,40 @@
+<odoo>
+    <record id="view_stock_location_inherited" model="ir.ui.view">
+        <field name="name">stock.location.inherited</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="model">stock.location</field>
+        <field name="priority">100</field>
+        <field type="xml" name="arch">
+            <xpath expr="//field[@name='return_location']" position="after">
+                <field name="is_store_location"/>
+                <field name="is_consumption_location"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_inherited" model="ir.ui.view">
+        <field name="name">account.account.inherited</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="model">account.account</field>
+        <field name="priority">100</field>
+        <field type="xml" name="arch">
+            <xpath expr="//field[@name='group_id']" position="after">
+                <field name="is_stock_account"/>
+                <field name="cgs_account"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_journal_inherited" model="ir.ui.view">
+        <field name="name">account.journal.inherited</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="model">account.journal</field>
+        <field name="priority">100</field>
+        <field type="xml" name="arch">
+            <xpath expr="//field[@name='type']" position="after">
+                <field name="is_stock_journal"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

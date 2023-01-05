@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_res_partner_inherited" model="ir.ui.view">
+        <field name="name">res.partner.inherited</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="model">res.partner</field>
+        <field name="priority">100</field>
+        <field type="xml" name="arch">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="itf_263" widget="radio" string="ITF263#"/>
+                <field name="itf_265" attrs="{'invisible': [('itf_263', '!=', 'register')]}" string="ITF265#"/>
+                <field name="date_valid_from" attrs="{'invisible': [('itf_263', '!=', 'register')]}"
+                       string="Valid From"/>
+                <field name="date_valid_to" attrs="{'invisible': [('itf_263', '!=', 'register')]}" string="Valid To"/>
+                <field name="bp" widget="radio"/>
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="attributes">
+                <attribute name="attrs">{
+                    'required': [('bp', '=', 'register')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='email']" position="attributes">
+                <attribute name="attrs">{
+                    'required': [('bp', '=', 'register')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='phone']" position="attributes">
+                <attribute name="attrs">{
+                    'required': [('bp', '=', 'register')]}
+                </attribute>
+            </xpath>
+
+<!--            <xpath expr="//field[@name='vat']//field[@name='email']//field[@name='phone']" position="attributes">-->
+<!--                <attribute name="attrs">{-->
+<!--                    'required': [('bp', '=', 'register')]}-->
+<!--                </attribute>-->
+<!--            </xpath>-->
+
+        </field>
+    </record>
+
+</odoo>

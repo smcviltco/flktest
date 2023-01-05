@@ -1,0 +1,109 @@
+<odoo>
+    <data>
+        <record id="view_store_consumption_tree" model="ir.ui.view">
+            <field name="name">store.consumption.tree</field>
+            <field name="model">store.consumption</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="ref"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_store_consumption_form" model="ir.ui.view">
+            <field name="name">store.consumption.form</field>
+            <field name="model">store.consumption</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <!--                        <button id="button_get_lines" name="action_get_lines" string="Get Lines" type="object"-->
+                        <!--                                class="btn-primary"/>-->
+                        <button id="action_to_review"
+                                name="action_to_review"
+                                string="Send For Review"
+                                type="object"
+                                class="btn-primary"
+                                states="draft"
+                                groups="store_consumption.group_store_user"
+                        />
+
+                        <button id="button_posted" name="action_posted" string="Posted" type="object"
+                                class="btn-primary"
+                                states="to_review" groups="store_consumption.group_store_manager"/>
+                        <!--                        <button id="button_confirmed" name="action_confirmed" string="Confirm Repair" type="object"-->
+                        <!--                                class="btn-primary"/>-->
+                        <!--                        <button id="button_start_repair" name="action_underrepair" string="Start Repair" type="object"-->
+                        <!--                                class="btn-primary"/>-->
+                        <!--                        <button id="button_end_repair" name="action_repaired" string="End Repair" type="object"-->
+                        <!--                                class="btn-primary"/>-->
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,to_review,posted"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" name="get_internal_transfer"
+                                    type="object" icon="fa-bars">
+                                <field name="int_counter" widget="statinfo" string="Transfer"/>
+                            </button>
+                            <button class="oe_stat_button" name="get_jv"
+                                    type="object" icon="fa-bars">
+                                <field name="jv_counter" widget="statinfo" string="Journal Entry"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="ref" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="location_id" required="True" readonly="True"/>
+                                <field name="date" required="True" attrs="{'readonly':[('state','=','posted')]}"/>
+                            </group>
+                            <group>
+                                <field name="account_id" required="True" options="{'no_create': True}" attrs="{'readonly':[('state','=','posted')]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Consumption Lines">
+                                <field name="stock_consumption_lines" attrs="{'readonly':[('state','=','posted')]}">
+                                    <tree editable="bottom">
+                                        <field name="product_id" optional="show"/>
+                                        <field name="available_quantity" optional="show" force_save="1"/>
+                                        <field name="uom" optional="show"/>
+                                        <field name="qty" optional="show"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_store_consumption" model="ir.actions.act_window">
+            <field name="name">Stock Consumption</field>
+            <field name="res_model">store.consumption</field>
+            <field name="view_id" ref="view_store_consumption_tree"/>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    create your first Stock Consumption!
+                </p>
+            </field>
+        </record>
+
+
+        <menuitem
+                id="menu_store_consumption"
+                name="Store Consumption"
+                sequence="2"
+                parent="stock.menu_stock_warehouse_mgmt"
+                action="action_store_consumption"/>
+    </data>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+1,access.create.invoice.wizard,model_create_invoice_wizard,,1,1,1,1
+2,access.create.sale.wizard,model_create_sale_wizard,,1,1,1,1
+3,access.create.purchase.wizard,model_create_purchase_wizard,,1,1,1,1
+4,access.create.payment.wizard,model_create_payment_wizard,,1,1,1,1

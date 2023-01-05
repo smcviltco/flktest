@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report id="deal_purchase_pdf"
+            string="Deals Report"
+            model="deal.purchase"
+            report_type="qweb-pdf"
+            name="deal_purchase.deal_purchase_id_print"
+            file="deal_purchase.deal_purchase_id_print"/>
+
+</odoo>

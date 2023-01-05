@@ -1,0 +1,60 @@
+<odoo>
+    <data>
+
+        <record id="view_account_move_form_inh" model="ir.ui.view">
+            <field name="name">account.move.form.inh</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='team_id']" position="after">
+                    <field name="invoice_types"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_account_move_server" model="ir.actions.server">
+            <field name="name">Create Invoices</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                action = records.action_account_move_wizard()
+            </field>
+        </record>
+
+        <record id="action_sale_order_server" model="ir.actions.server">
+            <field name="name">Create Sales</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                action = records.action_sale_wizard()
+            </field>
+        </record>
+
+        <record id="action_purchase_order_server" model="ir.actions.server">
+            <field name="name">Create Purchase</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                action = records.action_purchase_wizard()
+            </field>
+        </record>
+
+        <record id="action_account_payment_server" model="ir.actions.server">
+            <field name="name">Create Payments</field>
+            <field name="model_id" ref="account.model_account_payment"/>
+            <field name="binding_model_id" ref="account.model_account_payment"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                action = records.action_payment_wizard()
+            </field>
+        </record>
+
+    </data>
+</odoo>

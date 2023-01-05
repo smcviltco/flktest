@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="deal_purchase_id_print">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <h2>
+                            <span t-field="o.ref"/>
+                        </h2>
+
+                        <div id="informations" class="row mt32 mb32">
+                            <div t-if="o.vendor_id" class="col-3 bm-2">
+                                <strong>Vendor:</strong>
+                                <p t-field="o.vendor_id" class="m-0"/>
+                            </div>
+                            <div t-if="o.date" class="col-3 bm-2">
+                                <strong>Date:</strong>
+                                <p t-field="o.date" class="m-0"/>
+                            </div>
+                            <div t-if="o.vendor_reference" class="col-3 bm-2">
+                                <strong>Vendor Reference:</strong>
+                                <p t-field="o.vendor_reference" class="m-0"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <table class="table table-sm o_main_table">
+                            <thead>
+                                <tr>
+                                    <th name="th_product">
+                                        <strong>Product</strong>
+                                    </th>
+                                    <th name="th_description">
+                                        <strong>Description</strong>
+                                    </th>
+                                    <th name="th_quantity" class="text-right">
+                                        <strong>Qty</strong>
+                                    </th>
+                                    <th name="th_quantity_received" class="text-right">
+                                        <strong>Qty Received</strong>
+                                    </th>
+                                    <th name="th_price_unit" class="text-right">
+                                        <strong>Unit Price</strong>
+                                    </th>
+                                    <th name="th_subtotal" class="text-right">
+                                        <strong>SubTotal</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="total_subtotal" t-value="0"/>
+                                <t t-foreach="o.deal_lines_id" t-as="line">
+                                    <tr>
+                                        <td id="product">
+                                            <span t-field="line.product_id"/>
+                                        </td>
+                                        <td name="td_taxes">
+                                            <span t-field="line.description"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="line.qty"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="line.received_qty"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="line.unit_price"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="line.sub_total"/>
+                                            <t t-set="total_subtotal"
+                                               t-value="total_subtotal+line.sub_total"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <br/>
+                                <br/>
+                                <tr class="is-subtotal text-right">
+                                    <td colspan="99" id="subtotal">
+                                        <strong class="mr16">Subtotal&#160;&#160;&#160;&#160;
+                                        </strong>
+                                        <span
+                                                t-esc="total_subtotal"
+                                        />
+                                    </td>
+                                </tr>
+                                <!--                                    </t>-->
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

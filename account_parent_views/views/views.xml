@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_account_inherited" model="ir.ui.view">
+        <field name="name">account.account.inherited</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="model">account.account</field>
+        <field name="priority">100</field>
+        <field type="xml" name="arch">
+            <xpath expr="//field[@name='user_type_id']" position="after">
+                <field name="account"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_move_view_inherited" model="ir.ui.view">
+        <field name="name">account.move.inherited</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="model">account.move</field>
+        <field name="priority">100</field>
+        <field type="xml" name="arch">
+            <xpath expr="/form/sheet/notebook/page[@id='aml_tab']/field[@name='line_ids']/tree/field[@name='account_id']" position="replace">
+                <field name="account_id" domain="[('id', 'in', account_ids)]"/>
+                <field name="account_ids" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+      <record id="view_bill_of_inherited" model="ir.ui.view">
+        <field name="name">purchase.order.inherited</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="model">purchase.order</field>
+        <field name="priority">100</field>
+        <field type="xml" name="arch">
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="bill_of_entry"/>
+            </xpath>
+        </field>
+    </record>
+
+<!--     <record id="view_move_line_tree_inherit_view" model="ir.ui.view">-->
+<!--            <field name="name">view.move.line.tree.inherit</field>-->
+<!--            <field name="model">account.move.line</field>-->
+<!--            <field name="inherit_id" ref="account.view_move_line_tree"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='account_id']"-->
+<!--                       position="replace">-->
+<!--                    &lt;!&ndash; Add your fields or attributes here &ndash;&gt;-->
+<!--                        <field name="account_id"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+
+<!--    <record id="view_account_account_type_inherited" model="ir.ui.view">-->
+<!--        <field name="name">account.account.type.inherited</field>-->
+<!--        <field name="inherit_id" ref="account.view_account_type_form"/>-->
+<!--        <field name="model">account.account.type</field>-->
+<!--        <field name="priority">100</field>-->
+<!--        <field type="xml" name="arch">-->
+<!--            <xpath expr="/form/group/group/field[@name='type']" position="replace">-->
+<!--                <field name="type"/>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//field[@name='internal_group']" position="replace">-->
+<!--                <field name="internal_group"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    <record id="view_order_search_inherited" model="ir.ui.view">-->
+<!--        <field name="name">sale.order.inherited</field>-->
+<!--        <field name="inherit_id" ref="sale.view_sales_order_filter"/>-->
+<!--        <field name="model">sale.order</field>-->
+<!--        <field type="xml" name="arch">-->
+<!--            <search>-->
+<!--                <field name="description"/>-->
+<!--                <filter string="PARTNER_ID" name="partner_id" domain="[('partner_id','=','Gemini Furniture')]"/>-->
+<!--                <filter string="Salesperson Marc Demo" name="user_id" domain="[('user_id','=','Marc Demo')]"/>-->
+<!--                <filter string="Salesperson Mitchell Admin" name="user_id" domain="[('user_id','=','Mitchell Admin')]"/>-->
+<!--                <filter name="description" string="Name" context="{'group_by':'description'}"/>-->
+<!--            </search>-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+</odoo>
